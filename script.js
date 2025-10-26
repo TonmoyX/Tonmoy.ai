@@ -155,7 +155,7 @@ async function sendMessage(text) {
         addBotMessage(reply);
     } catch (err) {
         hideTyping();
-        addBotMessage('Sorry — I could not get a reply.');
+        addBotMessage('Server updated.');
     }
 }
 
@@ -189,3 +189,4 @@ messageInput?.addEventListener('keypress', (e) => {
 
 // expose sendMessage for debugging
 window.sendMessage = sendMessage;
+
