@@ -1,7 +1,7 @@
 // Minimal chat script: user sends messages, AI replies via Gemini REST API.
 // Replace API_KEY with your real key or use a server proxy for security.
-const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const API_KEY = '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'; // <-- put your API key here (X-goog-api-key)
+const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+const API_KEY = 'AIzaSyBACLEBVUJcbicO6I2ubhK2q6im8fMduvY'; // Gemini API key
 
 const landing = document.getElementById('landing');
 const chatInterface = document.getElementById('chat-interface');
@@ -102,8 +102,8 @@ function showTyping() {
     header.className = 'message-header';
     header.innerHTML = '<img src="T.png" alt="Bot"> AI';
     const content = document.createElement('div');
-    content.className = 'message-content';
-    content.textContent = 'AI is typing...';
+    content.className = 'message-content typing';
+    content.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
     el.appendChild(header);
     el.appendChild(content);
     chatContainer.appendChild(el);
@@ -117,48 +117,46 @@ function hideTyping() {
 
 async function callGemini(prompt) {
     if (!API_KEY) {
-        console.warn('No API key set in script.js - set API_KEY or use a server proxy');
+        console.warn('Sorry Server Update...');
         return 'API key not configured';
     }
 
-    const headers = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${API_KEY}`,
-        'HTTP-Referer': window.location.origin,
-        'X-Title': 'TonmoyAI Chat'
-    };
-
+    const url = `${API_URL}?key=${API_KEY}`;
+    
     try {
-        const resp = await fetch(API_URL, {
+        const resp = await fetch(url, {
             method: 'POST',
-            headers,
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
-                model: 'anthropic/claude-3-opus',
-                messages: [
-                    {
-                        role: 'user',
-                        content: prompt
-                    }
-                ],
-                temperature: 0.7,
-                max_tokens: 1000,
-                stream: false
+                contents: [{
+                    parts: [{
+                        text: prompt
+                    }]
+                }],
+                generationConfig: {
+                    temperature: 0.7,
+                    topK: 40,
+                    topP: 0.95,
+                    maxOutputTokens: 1000,
+                }
             })
         });
 
         if (!resp.ok) {
             const errorText = await resp.text();
             console.error('API Error:', errorText);
-            return 'Sorry for this time! Server Update...';
+            return 'I apologize, but there was an error connecting to the AI service. Please try again.';
         }
 
         const data = await resp.json();
-        if (!data.choices?.[0]?.message?.content) {
+        if (!data.candidates || !data.candidates[0]?.content?.parts?.length) {
             console.error('Unexpected API response:', data);
             return 'I apologize, but I received an invalid response. Please try again.';
         }
 
-        return data.choices[0].message.content;
+        return data.candidates[0].content.parts[0].text;
     } catch (err) {
         console.error('API call error:', err);
         return 'I apologize, but there was an error processing your request. Please try again.';
@@ -212,6 +210,3 @@ messageInput?.addEventListener('keypress', (e) => {
 
 // expose sendMessage for debugging
 window.sendMessage = sendMessage;
-
-
-
