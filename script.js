@@ -1,7 +1,7 @@
 // Minimal chat script: user sends messages, AI replies via Gemini REST API.
 // Replace API_KEY with your real key or use a server proxy for security.
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-const API_KEY = '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'; // <-- put your API key here (X-goog-api-key)
+const API_KEY = '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'; // <-- put your API key here (X-goog-api-key)
 
 const landing = document.getElementById('landing');
 const chatInterface = document.getElementById('chat-interface');
@@ -212,4 +212,5 @@ messageInput?.addEventListener('keypress', (e) => {
 
 // expose sendMessage for debugging
 window.sendMessage = sendMessage;
+
 
