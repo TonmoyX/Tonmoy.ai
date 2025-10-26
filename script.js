@@ -1,7 +1,7 @@
 // Minimal chat script: user sends messages, AI replies via Gemini REST API.
 // Replace API_KEY with your real key or use a server proxy for security.
 const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-const API_KEY = 'AIzaSyBACLEBVUJcbicO6I2ubhK2q6im8fMduvY'; // Gemini API key
+const API_KEY = 'AIzaSyD8zQSc4KhDIBWJEPRDZhOF7wEwcAS_-RQ'; // Gemini API key
 
 const landing = document.getElementById('landing');
 const chatInterface = document.getElementById('chat-interface');
