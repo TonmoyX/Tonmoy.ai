@@ -1,7 +1,7 @@
 // Minimal chat script: user sends messages, AI replies via Gemini REST API.
 // Replace API_KEY with your real key or use a server proxy for security.
-const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
-const API_KEY = 'AIzaSyCHASKkFqDGNJdEiM2ZQZvyMbzApwqv12k'; // <-- put your API key here (X-goog-api-key)
+const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const API_KEY = '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'; // <-- put your API key here (X-goog-api-key)
 
 const landing = document.getElementById('landing');
 const chatInterface = document.getElementById('chat-interface');
@@ -118,44 +118,67 @@ function hideTyping() {
 async function callGemini(prompt) {
     if (!API_KEY) {
         console.warn('No API key set in script.js - set API_KEY or use a server proxy');
+        return 'API key not configured';
     }
 
     const headers = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${API_KEY}`,
+        'HTTP-Referer': window.location.origin,
+        'X-Title': 'TonmoyAI Chat'
     };
-    if (API_KEY) headers['X-goog-api-key'] = API_KEY;
 
     try {
         const resp = await fetch(API_URL, {
             method: 'POST',
             headers,
             body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }]
+                model: 'anthropic/claude-3-opus',
+                messages: [
+                    {
+                        role: 'user',
+                        content: prompt
+                    }
+                ],
+                temperature: 0.7,
+                max_tokens: 1000,
+                stream: false
             })
         });
+
         if (!resp.ok) {
-            const txt = await resp.text();
-            throw new Error('API Error ' + resp.status + ' - ' + txt);
+            const errorText = await resp.text();
+            console.error('API Error:', errorText);
+            return 'Sorry for this time! Server Update...';
         }
+
         const data = await resp.json();
-        return data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
+        if (!data.choices?.[0]?.message?.content) {
+            console.error('Unexpected API response:', data);
+            return 'I apologize, but I received an invalid response. Please try again.';
+        }
+
+        return data.choices[0].message.content;
     } catch (err) {
-        console.error('callGemini error', err);
-        throw err;
+        console.error('API call error:', err);
+        return 'I apologize, but there was an error processing your request. Please try again.';
     }
 }
 
 async function sendMessage(text) {
     if (!text || !text.trim()) return;
+    
     addUserMessage(text);
     showTyping();
+    
     try {
         const reply = await callGemini(text);
         hideTyping();
         addBotMessage(reply);
     } catch (err) {
+        console.error('Message sending error:', err);
         hideTyping();
-        addBotMessage('Server updated.');
+        addBotMessage('I apologize, but I encountered an error. Please try again in a moment.');
     }
 }
 
@@ -189,4 +212,3 @@ messageInput?.addEventListener('keypress', (e) => {
 
 // expose sendMessage for debugging
 window.sendMessage = sendMessage;
-
