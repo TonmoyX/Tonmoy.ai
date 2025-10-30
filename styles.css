@@ -903,7 +903,7 @@ body.sidebar-open::before {
         padding: 15px;
     }
     #chat-input-area {
-        bottom: 100px;
+        bottom: 10px;
         padding: 0 15px;
     }
     #chat-tools {
@@ -1208,4 +1208,5 @@ body.sidebar-open::before {
 body.chat-active .landing-container::before {
     display: none;
 }
+
 
