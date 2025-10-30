@@ -238,11 +238,9 @@ body.sidebar-open::before {
     background-color: rgba(255,255,255,0.1);
 }
 
-.nav-item.active {
     .nav-item.active {
-    margin-left: -140px;
+    margin-left: -50px;
     background-color: none;
-}
 }
 
 .nav-item svg {
@@ -1076,7 +1074,7 @@ body.sidebar-open::before {
         background: none;
     }
       .nav-item.active {
-    margin-left: -0px;
+    margin-left: -70px;
     background-color: none;
 }
 }
@@ -1165,7 +1163,7 @@ body.sidebar-open::before {
         font-size: 11px;
     }
      .nav-item.active {
-    margin-left: 0px;
+    margin-left: -90px;
     background-color: none;
 }
 }
@@ -1225,6 +1223,7 @@ body.sidebar-open::before {
 body.chat-active .landing-container::before {
     display: none;
 }
+
 
 
 
