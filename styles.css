@@ -1072,6 +1072,10 @@ body.sidebar-open::before {
         margin-left: 0;
         background: none;
     }
+      .nav-item.active {
+    margin-left: -160px;
+    background-color: none;
+}
 }
 
 @media (max-width: 480px) {
@@ -1157,6 +1161,10 @@ body.sidebar-open::before {
     .history-time {
         font-size: 11px;
     }
+     .nav-item.active {
+    margin-left: -180px;
+    background-color: none;
+}
 }
 
 /* Handle smaller heights */
@@ -1180,6 +1188,10 @@ body.sidebar-open::before {
     .search-options {
         margin: 16px 0;
     }
+    .nav-item.active {
+    margin-left: -220px;
+    background-color: none;
+}
 }
 
 /* Dark mode optimization */
@@ -1210,4 +1222,5 @@ body.sidebar-open::before {
 body.chat-active .landing-container::before {
     display: none;
 }
+
 
