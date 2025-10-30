@@ -393,7 +393,7 @@ body.sidebar-open::before {
 .chat-container {
     position: fixed;
     top: 120px; /* Space for logo */
-    bottom: 180px; /* Space for input and tools */
+    bottom: 100px; /* Space for input and tools */
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
@@ -401,7 +401,7 @@ body.sidebar-open::before {
     background: transparent;
     overflow-y: auto;
     overflow-x: hidden;
-    padding: 20px;
+    padding: 90px;
     -ms-overflow-style: none;  /* Hide scrollbar for IE and Edge */
     scrollbar-width: none;  /* Hide scrollbar for Firefox */
 }
@@ -634,7 +634,31 @@ body.sidebar-open::before {
 }
 
 /* landing pill specific sizing */
-.landing-pill { max-width: 900px; width: 72vw; height: 56px; padding-left:12px; padding-right:12px; }
+.landing-pill { 
+    max-width: 900px; 
+    width: 72vw; 
+    height: 56px; 
+    padding-left: 12px; 
+    padding-right: 12px; 
+}
+
+@media screen and (max-width: 768px) {
+    .landing-pill {
+        width: 90vw;
+        max-width: 280px;
+        height: 48px;
+        padding: 8px 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .landing-pill {
+        width: 85vw;
+        max-width: 240px;
+        height: 44px;
+        padding: 6px 10px;
+    }
+}
 
 #message-input, #initial-input, .input-field {
     flex: 1;
@@ -645,7 +669,33 @@ body.sidebar-open::before {
     font-size: 16px;
     height: 28px;
     max-height: 20px;
-    outline:none;
+    outline: none;
+    min-width: 0; /* Prevents input from overflowing container */
+}
+
+@media screen and (max-width: 768px) {
+    #message-input, #initial-input, .input-field {
+        font-size: 14px;
+        height: 24px;
+        width: 160px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #message-input, #initial-input, .input-field {
+        font-size: 14px;
+        height: 24px;
+        width: 120px;
+    }
+    
+    .input-container .btn {
+        padding: 4px;
+    }
+    
+    .input-container .btn svg {
+        width: 16px;
+        height: 16px;
+    }
 }
 
  #initial-input::placeholder { color: #9b9b9b; }
@@ -983,7 +1033,7 @@ body.sidebar-open::before {
 
     .main-content {
         margin-left: 0;
-        padding: 12px;
+        padding: -0px;
     }
 
     .landing-title {
@@ -1019,7 +1069,6 @@ body.sidebar-open::before {
         margin-right: auto;
         margin-left: 0;
         background: none;
-        border: 1px solid rgba(255, 255, 255, 0.1);
     }
 }
 
@@ -1088,7 +1137,7 @@ body.sidebar-open::before {
         margin-right: auto;
         margin-left: 0;
         background: none;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+       
     }
 
     .message-content {
@@ -1138,9 +1187,7 @@ body.sidebar-open::before {
         border-color: rgba(255,255,255,0.1);
     }
 
-    .message {
-        background: #1A1A1A;
-    }
+   
 
     .user-message {
         background: #2A2A2A;
