@@ -390,7 +390,7 @@ body.sidebar-open::before {
     color: #fff;
 }
 
-.iner {
+.chat-container {
     position: fixed;
     top: 120px; /* Space for logo */
     bottom: 100px; /* Space for input and tools */
@@ -406,7 +406,7 @@ body.sidebar-open::before {
     scrollbar-width: none;  /* Hide scrollbar for Firefox */
 }
 
-.iner::-webkit-scrollbar {
+.chat-container::-webkit-scrollbar {
     display: none; /* Hide scrollbar for Chrome, Safari and Opera */
 }
 
@@ -721,7 +721,7 @@ body.sidebar-open::before {
 
 .input-container { pointer-events: auto; }
 
-.iner {
+.chat-container {
     padding-bottom: 180px; /* Add space for fixed input and tools */
 }
 
@@ -897,7 +897,7 @@ body.sidebar-open::before {
     .logo-container {
         padding: 15px;
     }
-    .iner {
+    .chat-container {
         top: 80px;
         bottom: 100px;
         padding: 15px;
@@ -918,7 +918,7 @@ body.sidebar-open::before {
     .send-button { width: 40px; height: 40px; }
     .message { max-width: 92%; }
     .logo { font-size: 2rem; }
-    .iner { padding: 15px; }
+    .chat-container { padding: 15px; }
     .tools { 
         gap: 10px;
         padding: 12px 0;
@@ -1210,8 +1210,3 @@ body.sidebar-open::before {
 body.chat-active .landing-container::before {
     display: none;
 }
-
-
-
-
-
