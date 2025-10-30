@@ -239,7 +239,6 @@ body.sidebar-open::before {
 }
 
 .nav-item.active {
-    margin-left: 0px;
     background-color: none;
 }
 
@@ -1223,6 +1222,7 @@ body.sidebar-open::before {
 body.chat-active .landing-container::before {
     display: none;
 }
+
 
 
 
