@@ -1076,7 +1076,7 @@ body.sidebar-open::before {
         background: none;
     }
       .nav-item.active {
-    margin-left: -160px;
+    margin-left: -0px;
     background-color: none;
 }
 }
@@ -1165,7 +1165,7 @@ body.sidebar-open::before {
         font-size: 11px;
     }
      .nav-item.active {
-    margin-left: -180px;
+    margin-left: 0px;
     background-color: none;
 }
 }
@@ -1225,6 +1225,7 @@ body.sidebar-open::before {
 body.chat-active .landing-container::before {
     display: none;
 }
+
 
 
 
