@@ -167,7 +167,7 @@ body.sidebar-open::before {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    max-height: 510px;
+    max-height: 470px;
     overflow-y: auto;
     scrollbar-width: none;
     scrollbar-color: none;
@@ -1210,3 +1210,4 @@ body.sidebar-open::before {
 body.chat-active .landing-container::before {
     display: none;
 }
+
