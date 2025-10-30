@@ -239,7 +239,10 @@ body.sidebar-open::before {
 }
 
 .nav-item.active {
+    .nav-item.active {
+    margin-left: -140px;
     background-color: none;
+}
 }
 
 .nav-item svg {
@@ -1222,5 +1225,6 @@ body.sidebar-open::before {
 body.chat-active .landing-container::before {
     display: none;
 }
+
 
 
