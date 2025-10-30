@@ -721,7 +721,7 @@ body.sidebar-open::before {
 
 .input-container { pointer-events: auto; }
 
-.chat-container {
+.iner {
     padding-bottom: 180px; /* Add space for fixed input and tools */
 }
 
@@ -897,7 +897,7 @@ body.sidebar-open::before {
     .logo-container {
         padding: 15px;
     }
-    .chat-container {
+    .iner {
         top: 80px;
         bottom: 100px;
         padding: 15px;
@@ -918,7 +918,7 @@ body.sidebar-open::before {
     .send-button { width: 40px; height: 40px; }
     .message { max-width: 92%; }
     .logo { font-size: 2rem; }
-    .chat-container { padding: 15px; }
+    .iner { padding: 15px; }
     .tools { 
         gap: 10px;
         padding: 12px 0;
@@ -955,7 +955,7 @@ body.sidebar-open::before {
     }
     .chat-container {
         top: 70px;
-        bottom: 80px;
+        bottom: 90px;
         padding: 10px;
     }
     #chat-input-area {
@@ -1047,7 +1047,9 @@ body.sidebar-open::before {
     }
 
     .chat-container {
-        margin: 10px 0;
+        top: 70px;
+        bottom: 90px;
+        padding: 10px;
     }
 
     .message {
@@ -1208,6 +1210,7 @@ body.sidebar-open::before {
 body.chat-active .landing-container::before {
     display: none;
 }
+
 
 
 
