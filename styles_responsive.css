@@ -169,4 +169,16 @@
     .search-option {
         min-height: 60px;
     }
+     .ai-model-list {
+        width: 95%;
+        margin-top: -250px;
+    }
+
+    .ai-model-item {
+        padding: 10px 14px;
+    }
+
+    .model-name {
+        font-size: 14px;
+    }
 }
