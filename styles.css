@@ -136,18 +136,17 @@ body.sidebar-open::before {
 .delete-chat-btn {
     position: absolute;
     right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 15%;
+
     background: none;
     border: none;
-    color: #ff3b30;
-    cursor: pointer;
+    color: #ffffff;
+  
     padding: 4px;
     border-radius: 4px;
-    display: none;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
+
 }
 
 .delete-chat-btn svg {
@@ -160,7 +159,7 @@ body.sidebar-open::before {
 }
 
 .delete-chat-btn:hover {
-    background: rgba(255, 59, 48, 0.1);
+    background: rgba(175, 174, 174, 0.1);
 }
 
 .history-list {
@@ -235,7 +234,6 @@ body.sidebar-open::before {
 }
 
 .nav-item:hover {
-    
     background-color: rgba(255,255,255,0.1);
 }
 
@@ -450,6 +448,93 @@ body.sidebar-open::before {
     letter-spacing: 0.2px;
     word-break: break-word;
     white-space: pre-wrap;
+}
+
+/* Enhanced input area styles */
+.chat-input-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.message-input {
+    flex: 1;
+    min-height: 40px;
+    max-height: 150px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: #fff;
+    font-size: 15px;
+    line-height: 1.5;
+    resize: none;
+    overflow-y: auto;
+    transition: all 0.2s ease;
+}
+
+.message-input:focus {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.2);
+    outline: none;
+}
+
+
+
+.attachment-btn {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border: none;
+    background: transparent;
+    color: #ccc;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.attachment-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.send-btn {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border: none;
+    background: #2D7FEA;
+    color: white;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send-btn:hover {
+    background: #1E6FDA;
+    transform: scale(1.05);
+}
+
+
+.message-content span {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.message-content span[style*="opacity: 1"] {
+    transform: translateY(0);
 }
 
 .message-image {
@@ -774,7 +859,133 @@ body.sidebar-open::before {
     transform: scale(0.95);
     background: rgba(255,255,255,0.15);
 }
+.ai-button { 
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: #cfcfcf;
+    transition: all 0.2s ease;
+    position: relative;
+}
 
+.ai-button svg { 
+    width: 20px;
+    height: 20px;
+    transition: transform 0.2s ease;
+}
+
+.ai-button svg path { 
+    fill: currentColor; 
+}
+
+.ai-button:hover { 
+    background: rgba(255,255,255,0.1);
+    color: #ffffff;
+}
+
+.ai-button:hover svg {
+    transform: scale(1.1);
+}
+
+.ai-button:active {
+    transform: scale(0.95);
+    background: rgba(255,255,255,0.15);
+}
+
+/* AI Model Dropdown Styles */
+.ai-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.ai-model-list {
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    background: #1E1E1E;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px 0;
+    margin-bottom: 8px;
+    min-width: 180px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+    z-index: 1000;
+}
+
+.ai-dropdown:hover .ai-model-list {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.ai-model-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+
+.ai-model-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.model-name {
+    color: #EDEDED;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.model-badge {
+    background: linear-gradient(135deg, #FFB800, #FF8A00);
+    color: #000;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 8px;
+    text-transform: uppercase;
+}
+
+/* Arrow pointer at the bottom */
+.ai-model-list::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #1E1E1E;
+}
+
+/* Active model indicator */
+.ai-model-item.active {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.ai-model-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(135deg, #FFB800, #FF8A00);
+    border-radius: 0 2px 2px 0;
+}
 .btn { 
     background: none; 
     border: none;
@@ -1074,7 +1285,7 @@ body.sidebar-open::before {
         margin-left: 0;
         background: none;
     }
-      .nav-item.active {
+     .nav-item.active {
     margin-left: -70px;
     background-color: none;
 }
@@ -1163,7 +1374,7 @@ body.sidebar-open::before {
     .history-time {
         font-size: 11px;
     }
-     .nav-item.active {
+    .nav-item.active {
     margin-left: -90px;
     background-color: none;
 }
@@ -1174,7 +1385,10 @@ body.sidebar-open::before {
     .sidebar-nav {
         gap: 2px;
     }
-
+.nav-item.active {
+    margin-left: -95px;
+    background-color: none;
+}
     .nav-item {
         padding: 8px;
     }
@@ -1190,10 +1404,6 @@ body.sidebar-open::before {
     .search-options {
         margin: 16px 0;
     }
-    .nav-item.active {
-    margin-left: -95px;
-    background-color: none;
-}
 }
 
 /* Dark mode optimization */
@@ -1224,15 +1434,3 @@ body.sidebar-open::before {
 body.chat-active .landing-container::before {
     display: none;
 }
-
-
-
-
-
-
-
-
-
-
-
-
