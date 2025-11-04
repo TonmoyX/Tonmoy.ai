@@ -22,13 +22,12 @@
     .ai-model-list {
         position: fixed;
         bottom: auto;
-        right: 50%;
         transform: translateX(50%) translateY(10px);
         margin: 0;
         top: 50%;
-        margin-top: -100px;
+        margin-top: -250px;
         width: 90%;
-        max-width: 300px;
+        max-width: 100px;
         box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
         z-index: 1001;
     }
@@ -111,7 +110,7 @@
 
     .ai-model-list {
         width: 95%;
-        margin-top: -90px;
+        margin-top: -250px;
     }
 
     .ai-model-item {
