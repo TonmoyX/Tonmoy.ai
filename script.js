@@ -1,7 +1,23 @@
 // Global variables for handling attachments and sidebar
 let currentImage = null;
+let currentModel = 'GPT-4 Turbo';
 const supportedImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 const maxFileSize = 5 * 1024 * 1024; // 5MB
+
+// Initialize AI model selection
+document.addEventListener('DOMContentLoaded', () => {
+    const modelItems = document.querySelectorAll('.ai-model-item');
+    modelItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // Remove active class from all items
+            modelItems.forEach(i => i.classList.remove('active'));
+            // Add active class to clicked item
+            item.classList.add('active');
+            // Update current model
+            currentModel = item.querySelector('.model-name').textContent;
+        });
+    });
+});
 
 // Initialize DOM elements
 const sidebarToggleBtn = document.getElementById('sidebar-toggle');
@@ -139,8 +155,26 @@ const initialSend = document.getElementById('initial-send');
 const messageInput = document.getElementById('message-input');
 const sendBtn = document.getElementById('send-btn');
 
-function ensureVisible() {
-    chatContainer.scrollTop = chatContainer.scrollHeight;
+// Track user's scroll state
+let userHasScrolled = false;
+
+// Listen for user scroll events
+chatContainer.addEventListener('scroll', () => {
+    userHasScrolled = true;
+    // Reset when user scrolls to bottom
+    if (chatContainer.scrollHeight - chatContainer.scrollTop - chatContainer.clientHeight < 20) {
+        userHasScrolled = false;
+    }
+});
+
+function ensureVisible(force = false) {
+    // Don't scroll if user has scrolled up, unless forced
+    if (userHasScrolled && !force) return;
+    
+    chatContainer.scrollTo({
+        top: chatContainer.scrollHeight,
+        behavior: 'smooth'
+    });
 }
 
 function createMessageEl(text, isUser = false) {
@@ -182,7 +216,26 @@ function addBotMessage(text) {
 function renderBotResponse(contentEl, text) {
     if (!contentEl) return;
     contentEl.textContent = '';
-    // split into lines and detect list patterns
+
+    // Function to animate a single word
+    const animateWord = async (container, word, isFirst = false) => {
+        const span = document.createElement('span');
+        span.textContent = (isFirst ? '' : ' ') + word;
+        span.style.opacity = '0';
+        span.style.transform = 'translateY(5px)';
+        container.appendChild(span);
+
+        return new Promise(resolve => {
+            requestAnimationFrame(() => {
+                span.style.transition = 'opacity 0.01s ease-out, transform 0.01s ease-out';
+                span.style.opacity = '1';
+                span.style.transform = 'translateY(0)';
+                setTimeout(resolve, 100); // 0.1 second per word
+            });
+        });
+    };
+
+    // Handle lists
     const lines = (text || '').split(/\r?\n/).map(l => l.trim()).filter(l => l !== '');
     const numbered = lines.some(l => /^\d+[\.)]\s+/.test(l) || /^step\s*\d+/i.test(l));
     const bulleted = lines.some(l => /^[-*•]\s+/.test(l));
@@ -191,35 +244,48 @@ function renderBotResponse(contentEl, text) {
         const list = document.createElement(numbered ? 'ol' : 'ul');
         list.className = 'bot-list';
         contentEl.appendChild(list);
-        let idx = 0;
-        const appendNext = () => {
-            if (idx >= lines.length) return;
-            const raw = lines[idx];
+        
+        const animateListItem = async (index) => {
+            if (index >= lines.length) return;
+
+            const raw = lines[index];
             const clean = raw.replace(/^\d+[\.)]\s+|^step\s*\d+[:\.)-]?\s*/i, '').replace(/^[-*•]\s+/, '');
             const li = document.createElement('li');
-            li.textContent = clean;
             list.appendChild(li);
+
+            const words = clean.split(/\s+/);
+            for (let i = 0; i < words.length; i++) {
+                await animateWord(li, words[i], i === 0);
+            }
+
             ensureVisible();
-            idx++;
-            setTimeout(appendNext, 260);
+            setTimeout(() => animateListItem(index + 1), 200);
         };
-        appendNext();
+
+        animateListItem(0);
         return;
     }
 
-    // otherwise split into sentences
-    const sentences = text.match(/[^.!?]+[.!?]*/g) || [text];
-    let i = 0;
-    const addSentence = () => {
-        if (i >= sentences.length) return;
-        const s = sentences[i].trim();
-        if (contentEl.textContent) contentEl.textContent += ' ' + s;
-        else contentEl.textContent = s;
+    // Handle regular text with word-by-word animation
+    const words = text.split(/\s+/);
+    let lastWordTime = Date.now();
+
+    const animateAllWords = async (index = 0) => {
+        if (index >= words.length) return;
+
+        const now = Date.now();
+        const timeSinceLastWord = now - lastWordTime;
+        const delay = Math.max(0, 100 - timeSinceLastWord); // Ensure 0.1s between words
+
+        await new Promise(resolve => setTimeout(resolve, delay));
+        await animateWord(contentEl, words[index], index === 0);
+        
+        lastWordTime = Date.now();
         ensureVisible();
-        i++;
-        setTimeout(addSentence, 220);
+        return animateAllWords(index + 1);
     };
-    addSentence();
+
+    animateAllWords();
 }
 
 function showTyping() {
@@ -395,9 +461,9 @@ function updateChatHistoryUI() {
             </svg>
             <span class="chat-title">${chat.title}</span>
             <button class="delete-chat-btn" title="Delete chat">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 7l1 12a2 2 0 002 2h6a2 2 0 002-2l1-12M6 7h12M6 7h0a3 3 0 013-3h6a3 3 0 013 3h0M10 11v6M14 11v6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+<g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(8.53333,8.53333)"><path d="M26.37,26l-8.795,-12.822l0.015,0.012l7.93,-9.19h-2.65l-6.46,7.48l-5.13,-7.48h-6.95l8.211,11.971l-0.001,-0.001l-8.66,10.03h2.65l7.182,-8.322l5.708,8.322zM10.23,6l12.34,18h-2.1l-12.35,-18z"></path></g></g>
+</svg>
             </button>
         `;
         
