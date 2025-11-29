@@ -347,7 +347,7 @@ body.sidebar-open::before {
     background-size: 800px 600px;
     background-position: 0 0;
     background-repeat: repeat;
-    opacity: 0.9;
+    opacity: 1;
     pointer-events: none;
     z-index: 10;
     animation: starfieldMove 300s linear infinite, starTwinkle 1s ease-in-out infinite;
@@ -1487,3 +1487,4 @@ body.sidebar-open::before {
 body.chat-active .landing-container::before {
     display: none;
 }
+
